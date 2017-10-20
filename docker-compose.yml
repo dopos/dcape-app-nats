@@ -1,0 +1,22 @@
+version: '2.1'
+
+services:
+
+  mq:
+    image: ${IMAGE}:${IMAGE_VER}
+    restart: always
+    networks:
+      - lan
+    labels:
+      - "traefik.enable=true"
+      - "traefik.port=8222"
+      - "traefik.frontend.rule=Host:${APP_SITE}"
+      - "traefik.frontend.auth.basic=${AUTH}"
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+
+networks:
+  lan:
+    external:
+      name: ${DCAPE_NET}
