@@ -21,6 +21,9 @@ DCAPE_PROJECT_NAME ?= dcape
 # dcape network attach to
 DCAPE_NET          ?= $(DCAPE_PROJECT_NAME)_default
 
+# Docker-compose image tag
+DC_VER             ?= 1.14.0
+
 define CONFIG_DEF
 # ------------------------------------------------------------------------------
 # NATS settings
@@ -95,7 +98,7 @@ dc: docker-compose.yml
 	  -v $$PWD:$$PWD \
 	  -w $$PWD \
 	  --env=AUTH=$$AUTH \
-	  docker/compose:1.14.0 \
+	  docker/compose:$(DC_VER) \
 	  -p $$PROJECT_NAME \
 	  $(CMD)
 
