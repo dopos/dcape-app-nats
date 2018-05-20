@@ -15,6 +15,10 @@ services:
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
+    expose:
+      - 4222
+      - 8222
+      - 6222
 
 networks:
   lan:

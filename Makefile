@@ -13,9 +13,9 @@ STATS_PASS         ?= $(shell < /dev/urandom tr -dc A-Za-z0-9 | head -c8; echo)
 # Docker image name
 IMAGE              ?= nats
 # Docker image tag
-IMAGE_VER          ?= 1.0.4
+IMAGE_VER          ?= 1.1.0
 # Docker-compose project name (container name prefix)
-PROJECT_NAME       ?= dcape
+PROJECT_NAME       ?= nats
 # dcape container name prefix
 DCAPE_PROJECT_NAME ?= dcape
 # dcape network attach to
