@@ -2,7 +2,7 @@ version: '2.1'
 
 services:
 
-  mq:
+  nats:
     image: ${IMAGE}:${IMAGE_VER}
     restart: always
     networks:
