@@ -5,6 +5,9 @@ services:
   nats:
     image: ${IMAGE}:${IMAGE_VER}
     restart: always
+    ports:
+      - 4222:4222
+      - 8222:8222
     networks:
       - lan
     labels:
