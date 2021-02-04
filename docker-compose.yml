@@ -5,7 +5,7 @@ version: '2'
 
 services:
   app:
-    container_name: ${SERVICE_HOST}
+    hostname: ${SERVICE_HOST}
     command: -m 8222 --store sql --sql_driver postgres
       --user ${USER_NAME} --pass ${USER_PASS}
     environment:
