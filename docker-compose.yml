@@ -1,20 +1,13 @@
-# custom app config
-# overrides DCAPE/apps/drone/dcape-app/docker-compose.yml
-
-version: '2'
+# This file will be joined with docker-compose.app.yml from dcape
+# See https://github.com/dopos/dcape
 
 services:
+  # This service will extend code from dcape
   app:
-    hostname: ${SERVICE_HOST}
-    command: -m 8222 --store sql --sql_driver postgres
-      --user ${USER_NAME} --pass ${USER_PASS}
-    environment:
-      - PGDATABASE
-      - PGUSER
-      - PGPASSWORD
-      - PGHOST=db
-      - PGSSLMODE=disable
     labels:
-      - "traefik.http.services.${APP_TAG}.loadbalancer.server.port=8222"
+      - traefik.http.services.${APP_TAG}.loadbalancer.server.port=8222
+    #    hostname: ${SERVICE_HOST}
+    command: --http_port 8222
+    #  --user ${USER_NAME} --pass ${USER_PASS}
     ports:
       - "${SERVICE_ADDR}:4222"

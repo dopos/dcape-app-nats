@@ -29,7 +29,12 @@
 * Edit and save config (enable deploy etc)
 * Run "Test delivery" again (app will be installed and started on webhook host)
 
-See also: [Deploy setup](https://github.com/dopos/dcape/blob/master/DEPLOY.md) (in Russian)
+## See also
+
+* [A Prometheus exporter for NATS metrics](https://github.com/nats-io/prometheus-nats-exporter)
+* [displaying NATS Streaming data streams](https://github.com/DefactoTechnology/nats-ui)
+* [NATS management GUI](https://github.com/nats-nui/nui)
+* [Setup dcape app](https://github.com/dopos/dcape/blob/master/DEPLOY.md) (in Russian)
 
 ## License
 
