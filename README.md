@@ -31,6 +31,7 @@
 
 ## See also
 
+* [A container with NATS utilities](https://github.com/nats-io/nats-box)
 * [A Prometheus exporter for NATS metrics](https://github.com/nats-io/prometheus-nats-exporter)
 * [displaying NATS Streaming data streams](https://github.com/DefactoTechnology/nats-ui)
 * [NATS management GUI](https://github.com/nats-nui/nui)

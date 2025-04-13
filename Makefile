@@ -16,18 +16,24 @@ APP_SITE           ?= $(APP_NAME).dev.test
 IMAGE              ?= nats
 
 #- Docker image tag
-IMAGE_VER          ?= 2.10.14-linux
+IMAGE_VER          ?= 2.11.1
 
 #- ip:port for external access
 SERVICE_ADDR       ?= 127.0.0.1:4222
 
+#- hostname for internal access
+SERVICE_HOST       ?= $(APP_NAME)
+
+#- NATS auth token
+NATS_TOKEN         ?= $(shell openssl rand -hex 16; echo)
+
+#- additional server args (eg.: -js)
+ARGS_ADDON         ?=
 # ------------------------------------------------------------------------------
 # app custom config
 
-# Add user config part to .env.sample
-ADD_USER           ?= yes
-
 # ------------------------------------------------------------------------------
+-include $(CFG_BAK)
 -include $(CFG)
 export
 
@@ -38,3 +44,6 @@ DCAPE_ROOT    ?= $(shell docker inspect -f "{{.Config.Labels.dcape_root}}" $(DCA
 ifeq ($(shell test -e $(DCAPE_ROOT)/Makefile.app && echo -n yes),yes)
   include $(DCAPE_ROOT)/Makefile.app
 endif
+
+admin: CMD=run -it --rm admin
+admin: dc

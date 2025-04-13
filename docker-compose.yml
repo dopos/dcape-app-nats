@@ -2,12 +2,41 @@
 # See https://github.com/dopos/dcape
 
 services:
-  # This service will extend code from dcape
+
   app:
     labels:
+      # HTTP status
       - traefik.http.services.${APP_TAG}.loadbalancer.server.port=8222
-    #    hostname: ${SERVICE_HOST}
-    command: --http_port 8222
-    #  --user ${USER_NAME} --pass ${USER_PASS}
+      - traefik.http.routers.${APP_TAG}.service=${APP_TAG}
+      - traefik.http.routers.${APP_TAG}.rule=Host(`${APP_SITE}`) && PathPrefix(`/stat/`)
+      - traefik.http.middlewares.${APP_TAG}-prefix.stripprefix.prefixes=/stat/
+      - traefik.http.routers.${APP_TAG}.middlewares=narra,${APP_TAG}-prefix@docker
+#      - traefik.http.routers.${APP_TAG}.middlewares=narra # Require gitea auth
+
+      # Websocket
+      - traefik.http.services.${APP_TAG}-ws.loadbalancer.server.port=8223
+      - traefik.http.routers.${APP_TAG}-ws.service=${APP_TAG}-ws
+      - traefik.http.routers.${APP_TAG}-ws.rule=Host(`${APP_SITE}`)
+      - traefik.http.middlewares.websocket-headers.headers.customrequestheaders.Connection=Upgrade
+      - traefik.http.middlewares.websocket-headers.headers.customrequestheaders.Upgrade=websocket
+      - traefik.http.routers.${APP_TAG}-ws.middlewares=websocket-headers@docker
+
+    volumes:
+      - ./nats.conf:/nats.conf
+      - ./data:/data
+    hostname: ${SERVICE_HOST}
+    command: --http_port 8222 -c /nats.conf ${ARGS_ADDON}
     ports:
       - "${SERVICE_ADDR}:4222"
+    environment:
+      - TOKEN=$NATS_TOKEN
+
+  admin:
+    profiles: ["admin"]
+    image: natsio/nats-box:latest
+    volumes:
+      - ./data/ncs:/nsc
+    # ENV for nats client
+    environment:
+      - NATS_URL=nats://app:4222
+      - NATS_USER=$NATS_TOKEN
